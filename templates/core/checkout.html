@@ -1,0 +1,823 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checkout | Foodly</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: 900;
+            color: #ff4d2d;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #ff4d2d;
+        }
+
+
+        /* CONTAINER */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 30px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+
+        /* CARD */
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            font-size: 23px;
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+
+
+        .add-address-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px;
+            margin-bottom: 20px;
+            border-radius: 13px;
+            border: 2px dashed #ff4d2d;
+            color: #ff4d2d;
+            font-weight: 800;
+            background: #fff8f5;
+            transition: 0.25s;
+        }
+
+        .add-address-btn:hover {
+            background: #ff4d2d;
+            color: white;
+        }
+
+
+        /* ADDRESS */
+
+        .address-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+
+            padding: 18px;
+            margin-bottom: 15px;
+
+            border: 2px solid #eeeeee;
+            border-radius: 16px;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .address-option:hover {
+            border-color: #ff4d2d;
+            background: #fff8f5;
+        }
+
+        .address-option input {
+            width: 20px;
+            height: 20px;
+
+            margin-top: 4px;
+
+            accent-color: #ff4d2d;
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+        }
+
+        .address-text {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .address-name {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+
+        /* PAYMENT */
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 16px;
+            margin-bottom: 12px;
+
+            border: 2px solid #eeeeee;
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .payment-option:hover {
+            border-color: #ff4d2d;
+            background: #fff8f5;
+        }
+
+        .payment-option input {
+            width: 19px;
+            height: 19px;
+
+            accent-color: #ff4d2d;
+
+            cursor: pointer;
+        }
+
+        .payment-name {
+            font-weight: 700;
+        }
+
+        .payment-small {
+            display: block;
+            margin-top: 3px;
+            color: #777;
+            font-size: 13px;
+        }
+
+
+        /* FOOD ITEMS */
+
+        .food-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .food-name {
+            font-weight: 700;
+        }
+
+        .food-quantity {
+            margin-top: 4px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .food-price {
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+
+        /* SUMMARY */
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            font-size: 16px;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid #eeeeee;
+
+            margin-top: 10px;
+            padding-top: 18px;
+
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .total-price {
+            color: #ff4d2d;
+        }
+
+
+        /* BUTTON */
+
+        .place-order-btn {
+            width: 100%;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff512f,
+                    #f09819
+                );
+
+            color: white;
+
+            padding: 17px;
+
+            border-radius: 14px;
+
+            font-size: 18px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            margin-top: 20px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(255, 81, 47, 0.25);
+
+            transition: 0.25s;
+        }
+
+        .place-order-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(255, 81, 47, 0.35);
+        }
+
+
+        /* EMPTY */
+
+        .empty-message {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+
+
+        /* MESSAGES */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background: #fff3cd;
+
+            border: 1px solid #ffe69c;
+
+            color: #664d03;
+
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+                font-size: 13px;
+            }
+
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 30px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+        .delete-address-btn {
+            margin-top: 10px;
+            padding: 8px 14px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            background: white;
+            color: #dc3545;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .delete-address-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <a
+        href="{% url 'home' %}"
+        class="logo"
+    >
+        🍴 Foodly
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'cart' %}">
+            🛒 Cart
+        </a>
+
+        <a href="{% url 'wishlist' %}">
+            ❤️ Favorites
+        </a>
+
+        <a href="{% url 'my_orders' %}">
+            📦 My Orders
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <h1 class="page-title">
+        🛒 Checkout
+    </h1>
+
+
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div class="message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- IMPORTANT:
+         ADDRESS + PAYMENT + BUTTON
+         ARE ALL INSIDE THIS FORM.
+    -->
+
+    <form
+        method="POST"
+        action="{% url 'checkout' %}"
+    >
+
+        {% csrf_token %}
+
+
+        <div class="checkout-grid">
+
+
+            <!-- LEFT COLUMN -->
+
+            <div>
+
+
+                <!-- DELIVERY ADDRESS -->
+
+            <!-- DELIVERY ADDRESS -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    📍 Delivery Address
+                </div>
+
+                <!-- ADD NEW ADDRESS BUTTON -->
+
+                <a
+                    href="{% url 'add_address' %}"
+                    class="add-address-btn"
+                >
+                    ➕ Add New Address
+                </a>
+
+                {% if addresses %}
+
+                    {% for address in addresses %}
+
+                        <div class="address-option">
+
+                            <label class="address-select">
+
+                                <input
+                                    type="radio"
+                                    name="address"
+                                    value="{{ address.pk }}"
+                                    required
+                                >
+
+                                <div class="address-text">
+
+                                    <div class="address-name">
+                                        {{ address.full_name }}
+                                    </div>
+
+                                    {{ address.address_line }}
+
+                                    <br>
+
+                                    {{ address.city }},
+                                    {{ address.state }}
+                                    - {{ address.pincode }}
+
+                                    <br>
+
+                                    📞 {{ address.phone }}
+
+                                </div>
+
+                            </label>
+
+                            <!-- DELETE ADDRESS -->
+
+                            <form
+                                method="POST"
+                                action="{% url 'delete_address' address.id %}"
+                                onsubmit="return confirm('Are you sure you want to delete this address?');"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="delete-address-btn"
+                                >
+                                    🗑️ Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-message">
+
+                        No delivery address found.
+
+                        <br>
+
+                        Please add a new address.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="card">
+
+
+                    <div class="card-title">
+                        💳 Payment Method
+                    </div>
+
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="COD"
+                            checked
+                            required
+                        >
+
+
+                        <div>
+
+                            <div class="payment-name">
+                                💵 Cash on Delivery
+                            </div>
+
+                            <span class="payment-small">
+                                Pay when your order arrives
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="CARD"
+                        >
+
+
+                        <div>
+
+                            <div class="payment-name">
+                                💳 Credit / Debit Card
+                            </div>
+
+                            <span class="payment-small">
+                                Mock payment for demo
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="UPI"
+                        >
+
+
+                        <div>
+
+                            <div class="payment-name">
+                                📱 UPI
+                            </div>
+
+                            <span class="payment-small">
+                                Mock UPI payment for demo
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div>
+
+
+                <div class="card">
+
+
+                    <div class="card-title">
+                        🧾 Order Summary
+                    </div>
+
+
+
+                    {% for item in cart_items %}
+
+
+                        <div class="food-item">
+
+
+                            <div>
+
+                                <div class="food-name">
+                                    {{ item.food_item.name }}
+                                </div>
+
+
+                                <div class="food-quantity">
+
+                                    Quantity:
+                                    {{ item.quantity }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="food-price">
+
+                                ₹{{ item.food_item.price|floatformat:2 }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+
+                    <!-- SUBTOTAL -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span>
+                            ₹{{ subtotal|floatformat:2 }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery Fee
+                        </span>
+
+                        <span>
+                            ₹{{ delivery_fee|floatformat:2 }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DISCOUNT -->
+
+                    {% if discount %}
+
+                        <div class="summary-row">
+
+                            <span>
+                                Discount
+                            </span>
+
+                            <span>
+                                - ₹{{ discount|floatformat:2 }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="summary-row total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span class="total-price">
+                            ₹{{ total|floatformat:2 }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- PLACE ORDER -->
+
+                    <button
+                        type="submit"
+                        class="place-order-btn"
+                    >
+                        🚀 Place Order
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>

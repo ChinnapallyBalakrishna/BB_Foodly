@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Favorites | Foodly</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #111;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #555;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #111;
+        }
+
+        /* Page */
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 55px 24px 80px;
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        /* Grid */
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Card */
+
+        .food-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e8e8e8;
+            transition: 0.25s;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .food-content {
+            padding: 18px;
+        }
+
+        .food-content h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .restaurant-name {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #f1f1f1;
+            color: #555;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .food-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-btn,
+        .remove-btn {
+            border: none;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-btn {
+            background: #111;
+            color: #fff;
+        }
+
+        .add-btn:hover {
+            background: #333;
+        }
+
+        .remove-btn {
+            background: #f1f1f1;
+            color: #555;
+        }
+
+        .remove-btn:hover {
+            background: #e5e5e5;
+        }
+
+        /* Empty */
+
+        .empty-state {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 18px;
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .empty-state h2 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            background: #111;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 1000px) {
+            .wishlist-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .food-image {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Foodly
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="{% url 'wishlist' %}">Favorites</a>
+                <a href="{% url 'my_orders' %}">My Orders</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- Main -->
+
+    <main class="page">
+
+        <div class="page-header">
+            <h1>My Favorites</h1>
+            <p>Your saved food items in one place.</p>
+        </div>
+
+
+        {% if wishlist_items %}
+
+            <div class="wishlist-grid">
+
+                {% for item in wishlist_items %}
+
+                    <div class="food-card">
+
+                        <!-- Food Image -->
+
+                        {% if item.food_item.image_url %}
+
+                            <img
+                                src="{{ item.food_item.image_url }}"
+                                alt="{{ item.food_item.name }}"
+                                class="food-image"
+                            >
+
+                        {% elif item.food_item.image %}
+
+                            <img
+                                src="{{ item.food_item.image.url }}"
+                                alt="{{ item.food_item.name }}"
+                                class="food-image"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="https://loremflickr.com/800/600/food?lock={{ item.food_item.id }}"
+                                alt="{{ item.food_item.name }}"
+                                class="food-image"
+                            >
+
+                        {% endif %}
+
+
+                        <div class="food-content">
+
+                            <h3>
+                                {{ item.food_item.name }}
+                            </h3>
+
+                            <p class="restaurant-name">
+                                {{ item.food_item.restaurant.name }}
+                            </p>
+
+                            <span class="category">
+                                {{ item.food_item.category.name }}
+                            </span>
+
+
+                            <div class="food-bottom">
+
+                                <span class="price">
+                                    ₹{{ item.food_item.price }}
+                                </span>
+
+
+                                <div class="actions">
+
+                                    <a
+                                        href="{% url 'add_to_cart' item.food_item.id %}"
+                                        class="add-btn"
+                                    >
+                                        Add
+                                    </a>
+
+                                    <a
+                                        href="{% url 'toggle_wishlist' item.food_item.id %}"
+                                        class="remove-btn"
+                                    >
+                                        Remove
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h2>No favorites yet</h2>
+
+                <p>
+                    Save your favorite food items and find them here.
+                </p>
+
+                <a href="{% url 'home' %}" class="browse-btn">
+                    Browse Restaurants
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+</html>

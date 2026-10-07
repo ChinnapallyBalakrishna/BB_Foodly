@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Placed - Foodly</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fa;
+            color: #222;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #ff4d2d;
+            padding: 17px 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 800px;
+
+            margin: 45px auto;
+        }
+
+        /* SUCCESS CARD */
+
+        .success-card {
+            background: white;
+
+            border-radius: 28px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            width: 90px;
+            height: 90px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #fff1ec;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 48px;
+        }
+
+        .success-title {
+            margin: 0;
+
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .success-text {
+            color: #777;
+
+            font-size: 15px;
+
+            margin: 12px auto 30px;
+
+            line-height: 1.6;
+
+            max-width: 550px;
+        }
+
+        /* ORDER NUMBER */
+
+        .order-number-card {
+            background: #fff7f4;
+
+            border: 1px solid #ffd8cd;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .small-label {
+            color: #888;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .order-number {
+            color: #ff4d2d;
+
+            font-size: 25px;
+
+            font-weight: 900;
+        }
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+
+            text-align: left;
+
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            padding: 18px;
+
+            background: #fafafa;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 15px;
+        }
+
+        .info-label {
+            color: #888;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            font-size: 16px;
+
+            font-weight: 800;
+        }
+
+        /* BILL */
+
+        .bill {
+            border-top: 1px solid #eeeeee;
+
+            padding-top: 20px;
+
+            text-align: left;
+        }
+
+        .bill-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 9px 0;
+
+            color: #555;
+        }
+
+        .bill-total {
+            border-top: 1px dashed #ddd;
+
+            margin-top: 8px;
+
+            padding-top: 15px;
+
+            font-size: 20px;
+
+            font-weight: 900;
+
+            color: #222;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+
+            padding: 15px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-weight: 900;
+
+            transition: 0.25s;
+        }
+
+        .btn-primary {
+            background: #ff4d2d;
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e63d20;
+
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #eeeeee;
+
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #dddddd;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .container {
+                width: 94%;
+
+                margin: 25px auto;
+            }
+
+            .success-card {
+                padding: 25px 18px;
+            }
+
+            .success-title {
+                font-size: 27px;
+            }
+
+            .success-icon {
+                width: 75px;
+                height: 75px;
+
+                font-size: 40px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <a
+            href="{% url 'home' %}"
+            class="logo"
+        >
+            🍔 Foodly
+        </a>
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+            <a href="{% url 'my_orders' %}">
+                📦 My Orders
+            </a>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <div class="success-card">
+
+
+            <div class="success-icon">
+                🎉
+            </div>
+
+
+            <h1 class="success-title">
+                Order Placed Successfully!
+            </h1>
+
+
+            <p class="success-text">
+
+                Thank you for ordering with Foodly! 🍕
+
+                Your order has been received and the restaurant
+                will start processing it shortly.
+
+            </p>
+
+
+            <!-- ORDER NUMBER -->
+
+            <div class="order-number-card">
+
+                <div class="small-label">
+                    Order Number
+                </div>
+
+                <div class="order-number">
+                    {{ order.order_number }}
+                </div>
+
+            </div>
+
+
+            <!-- ORDER INFO -->
+
+            <div class="info-grid">
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        🏪 Restaurant
+                    </div>
+
+                    <div class="info-value">
+
+                        {% for item in order.items.all %}
+
+                            {% if forloop.first %}
+
+                                {{ item.food_item.restaurant.name }}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        📦 Status
+                    </div>
+
+                    <div class="info-value">
+
+                        {{ order.get_status_display }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        💳 Payment
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if order.payment_method == "COD" %}
+
+                            💵 Cash on Delivery
+
+                        {% else %}
+
+                            {{ order.payment_method }}
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        💰 Total
+                    </div>
+
+                    <div class="info-value">
+
+                        ₹{{ order.total_amount }}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BILL -->
+
+            <div class="bill">
+
+                <div class="bill-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₹{{ order.subtotal }}
+                    </span>
+
+                </div>
+
+
+                <div class="bill-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <span>
+                        ₹40.00
+                    </span>
+
+                </div>
+
+
+                <div class="bill-row bill-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ₹{{ order.total_amount }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'order_detail' order.order_number %}"
+                    class="btn btn-secondary"
+                >
+                    📋 View Order
+                </a>
+
+
+                <a
+                    href="{% url 'track_order' order.order_number %}"
+                    class="btn btn-primary"
+                >
+                    🚚 Track Order
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

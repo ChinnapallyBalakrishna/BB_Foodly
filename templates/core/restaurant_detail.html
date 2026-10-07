@@ -1,0 +1,623 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ restaurant.name }} - Foodly</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            color: #222;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #ff5722;
+            font-weight: 700;
+        }
+
+        .restaurant-header {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .restaurant-info {
+            padding: 28px;
+        }
+
+        .restaurant-info h1 {
+            margin: 0 0 10px;
+            font-size: 38px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .restaurant-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meta-item {
+            background: #f1f1f1;
+            padding: 9px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .meta-item.rating {
+            background: #fff3cd;
+        }
+
+        .meta-item.open {
+            background: #d4edda;
+            color: #176b2c;
+        }
+
+        .meta-item.closed {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .menu-heading {
+            margin-bottom: 25px;
+        }
+
+        .menu-heading h2 {
+            font-size: 32px;
+            margin: 0 0 8px;
+        }
+
+        .menu-heading p {
+            color: #777;
+            margin: 0;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
+            gap: 25px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .food-content {
+            padding: 20px;
+        }
+
+        .food-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .food-name {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .veg-badge {
+            background: #dff5e1;
+            color: #198754;
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .food-description {
+            color: #777;
+            line-height: 1.5;
+            min-height: 45px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #fff0eb;
+            color: #ff5722;
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .food-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            gap: 15px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .food-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .favorite-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            background: #f5f5f5;
+            color: #ff5722;
+            font-size: 22px;
+        }
+
+        .favorite-btn.active {
+            background: #ffe3dc;
+        }
+
+        .add-btn {
+            text-decoration: none;
+            background: #ff5722;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .add-btn:hover {
+            background: #e64a19;
+        }
+
+        .login-message {
+            margin-top: 15px;
+            color: #888;
+            font-size: 13px;
+        }
+
+        .empty-menu {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 20px;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+
+            main {
+                padding: 15px;
+            }
+
+            .restaurant-image {
+                height: 250px;
+            }
+
+            .restaurant-info h1 {
+                font-size: 30px;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<main>
+
+
+    <!-- Back -->
+
+    <a
+        href="{% url 'home' %}"
+        class="back-link"
+    >
+        ← Back to restaurants
+    </a>
+
+
+    <!-- Restaurant Header -->
+
+    <section class="restaurant-header">
+
+
+        {% if restaurant.image %}
+
+            <img
+                src="{{ restaurant.image.url }}"
+                alt="{{ restaurant.name }}"
+                class="restaurant-image"
+            >
+
+
+        {% elif food_items %}
+
+            {% for food in food_items|slice:":1" %}
+
+                {% if food.image %}
+
+                    <img
+                        src="{{ food.image.url }}"
+                        alt="{{ restaurant.name }}"
+                        class="restaurant-image"
+                    >
+
+                {% elif food.image_url %}
+
+                    <img
+                        src="{{ food.image_url }}"
+                        alt="{{ restaurant.name }}"
+                        class="restaurant-image"
+                    >
+
+                {% else %}
+
+                    <img
+                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200"
+                        alt="{{ restaurant.name }}"
+                        class="restaurant-image"
+                    >
+
+                {% endif %}
+
+            {% endfor %}
+
+
+        {% elif restaurant.image_url %}
+
+            <img
+                src="{{ restaurant.image_url }}"
+                alt="{{ restaurant.name }}"
+                class="restaurant-image"
+            >
+
+
+        {% else %}
+
+            <img
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200"
+                alt="{{ restaurant.name }}"
+                class="restaurant-image"
+            >
+
+        {% endif %}
+
+
+        <!-- Restaurant Information -->
+
+        <div class="restaurant-info">
+
+            <h1>
+                {{ restaurant.name }}
+            </h1>
+
+
+            <p class="description">
+                {{ restaurant.description }}
+            </p>
+
+
+            <div class="restaurant-meta">
+
+                <span class="meta-item">
+                    🍛 {{ restaurant.cuisine }}
+                </span>
+
+                <span class="meta-item">
+                    📍 {{ restaurant.city }}
+                </span>
+
+                <span class="meta-item rating">
+                    ⭐ {{ restaurant.rating }} rating
+                </span>
+
+                <span class="meta-item">
+                    🕒 {{ restaurant.delivery_time }} min
+                </span>
+
+                <span class="meta-item">
+                    🚚 Delivery ₹{{ restaurant.delivery_fee }}
+                </span>
+
+
+                {% if restaurant.is_open %}
+
+                    <span class="meta-item open">
+                        Open now
+                    </span>
+
+                {% else %}
+
+                    <span class="meta-item closed">
+                        Closed
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Menu -->
+
+    <section>
+
+
+        <div class="menu-heading">
+
+            <h2>
+                Menu
+            </h2>
+
+            <p>
+                Choose your favorite food from
+                {{ restaurant.name }}.
+            </p>
+
+        </div>
+
+
+        {% if food_items %}
+
+
+            <div class="food-grid">
+
+
+                {% for food in food_items %}
+
+
+                    <article class="food-card">
+
+
+                        <!-- Food Image -->
+
+                        {% if food.image %}
+
+                            <img
+                                src="{{ food.image.url }}"
+                                alt="{{ food.name }}"
+                                class="food-image"
+                            >
+
+                        {% elif food.image_url %}
+
+                            <img
+                                src="{{ food.image_url }}"
+                                alt="{{ food.name }}"
+                                class="food-image"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800"
+                                alt="{{ food.name }}"
+                                class="food-image"
+                            >
+
+                        {% endif %}
+
+
+                        <!-- Food Details -->
+
+                        <div class="food-content">
+
+
+                            <div class="food-top">
+
+                                <h3 class="food-name">
+                                    {{ food.name }}
+                                </h3>
+
+
+                                {% if food.is_vegetarian %}
+
+                                    <span class="veg-badge">
+                                        VEG
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <p class="food-description">
+
+                                {{ food.description|default:"Delicious food prepared fresh for you." }}
+
+                            </p>
+
+
+                            {% if food.category %}
+
+                                <span class="category">
+                                    {{ food.category.name }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <div class="food-bottom">
+
+
+                                <span class="price">
+                                    ₹{{ food.price }}
+                                </span>
+
+
+                                <div class="food-actions">
+
+
+                                    <!-- Wishlist -->
+
+                                    {% if user.is_authenticated %}
+
+
+                                        {% if food.id in wishlist_ids %}
+
+                                            <a
+                                                href="{% url 'toggle_wishlist' food.id %}"
+                                                class="favorite-btn active"
+                                                title="Remove from favorites"
+                                            >
+                                                ♥
+                                            </a>
+
+                                        {% else %}
+
+                                            <a
+                                                href="{% url 'toggle_wishlist' food.id %}"
+                                                class="favorite-btn"
+                                                title="Add to favorites"
+                                            >
+                                                ♡
+                                            </a>
+
+                                        {% endif %}
+
+
+                                    {% else %}
+
+                                        <a
+                                            href="{% url 'login' %}"
+                                            class="favorite-btn"
+                                            title="Login to add favorites"
+                                        >
+                                            ♡
+                                        </a>
+
+                                    {% endif %}
+
+
+                                    <!-- Add to Cart -->
+
+                                    <a
+                                        href="{% url 'add_to_cart' food.id %}"
+                                        class="add-btn"
+                                    >
+                                        Add
+                                    </a>
+
+
+                                </div>
+
+                            </div>
+
+
+                            {% if not user.is_authenticated %}
+
+                                <div class="login-message">
+                                    Login to save favorites and order food.
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-menu">
+
+                No food items are currently available.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+</body>
+
+</html>
