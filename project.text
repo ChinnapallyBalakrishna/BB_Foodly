@@ -1,0 +1,1415 @@
+Run the code --- \Users\Hi\Foodly
+
+\Users\Hi\venv\Scripts\activate
+
+python manage.py runserver
+
+
+
+
+# BB_Foodly - Food Ordering Web Application
+
+## 1. Project Overview
+
+BB_Foodly is a full-stack food ordering web application developed using Django and MySQL.
+
+The main purpose of this project is to provide an online platform where users can:
+
+- Create an account
+- Login and logout
+- Browse restaurants
+- Browse food categories
+- Search for food items
+- Filter food by cuisine and price
+- View restaurant menus
+- Add food items to cart
+- Increase or decrease food quantity
+- Remove items from cart
+- Add delivery addresses
+- Delete delivery addresses
+- Place food orders
+- Select payment methods
+- View order details
+- Track order status
+- Add food items to wishlist/favorites
+- View previous orders
+
+The project provides a complete food ordering flow from browsing food to placing and tracking an order.
+
+---
+
+# 2. Project Name
+
+**BB_Foodly**
+
+BB_Foodly is designed as a modern food ordering platform similar to common online food delivery applications.
+
+
+# 3. Main Objective
+
+The main objective of this project is to build a practical food ordering system using Django.
+
+The application demonstrates:
+
+- User authentication
+- Database management
+- Django models
+- Django views
+- Django templates
+- URL routing
+- Forms
+- Shopping cart functionality
+- Order management
+- Address management
+- Wishlist functionality
+- Food and restaurant management
+- Image management
+- Search and filtering
+- Responsive frontend design
+
+---
+
+# 4. Technologies Used
+
+## Backend
+
+- Python
+- Django
+- Django ORM
+
+## Database
+
+- MySQL
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+## Development Tools
+
+- Visual Studio Code
+- Command Prompt / VS Code Terminal
+- Git
+- GitHub
+
+## Image Storage
+
+Django Media Files
+
+---
+
+# 5. Software Versions
+
+Current development environment:
+
+- Python: 3.14.5
+- Django: 5.2.17
+- Database: MySQL
+- Operating System: Windows
+- Code Editor: Visual Studio Code
+
+---
+
+# 6. Project Architecture
+
+The project follows the Django MVT architecture.
+
+MVT means:
+
+- Model
+- View
+- Template
+
+### Model
+
+Models are responsible for storing and managing database information.
+
+Examples:
+
+- Restaurant
+- Category
+- FoodItem
+- Address
+- Cart
+- CartItem
+- Order
+- OrderItem
+- Wishlist
+- Coupon
+
+### View
+
+Views contain the application logic.
+
+Examples:
+
+- Home page
+- Restaurant details
+- Cart
+- Checkout
+- Login
+- Registration
+- Orders
+- Order tracking
+- Wishlist
+
+### Template
+
+Templates are responsible for displaying the frontend pages.
+
+Examples:
+
+- Home page
+- Restaurant page
+- Cart page
+- Checkout page
+- Login page
+- Registration page
+- Order details
+- Order tracking
+
+---
+
+# 7. Main Project Structure
+
+The project contains a Django project named `config` and an application named `core`.
+
+Example structure:
+
+Foodly/
+
+    manage.py
+
+    config/
+        settings.py
+        urls.py
+        asgi.py
+        wsgi.py
+
+    core/
+        models.py
+        views.py
+        urls.py
+        admin.py
+
+        templates/
+            core/
+                home.html
+                login.html
+                register.html
+                restaurant_detail.html
+                cart.html
+                checkout.html
+                add_address.html
+                order_success.html
+                order_detail.html
+                track_order.html
+                my_orders.html
+                wishlist.html
+
+        migrations/
+
+    media/
+        food/
+        restaurant/
+        category/
+
+    requirements.txt
+
+    PROJECT_INFORMATION.md
+
+---
+
+# 8. Django Project
+
+## Project Name
+
+`config`
+
+The `config` folder contains the main Django project configuration.
+
+Important files:
+
+### settings.py
+
+Contains:
+
+- Installed applications
+- Database configuration
+- Templates configuration
+- Static files configuration
+- Media files configuration
+- Middleware
+- Authentication settings
+
+### urls.py
+
+Contains the main URL configuration.
+
+The `core` application URLs are connected to the project URLs.
+
+---
+
+# 9. Django Application
+
+## Application Name
+
+`core`
+
+The `core` application contains the main business logic of the Foodly application.
+
+It contains:
+
+- Models
+- Views
+- URLs
+- Templates
+- Admin configuration
+- Migrations
+
+---
+
+# 10. Database
+
+The project uses MySQL.
+
+Database name:
+
+`foodly_db`
+
+Django ORM is used to communicate with MySQL.
+
+The Django ORM allows the application to perform database operations using Python instead of writing SQL for every operation.
+
+---
+
+# 11. Database Models
+
+The project contains multiple models.
+
+## Restaurant
+
+The Restaurant model stores restaurant information.
+
+Important fields include:
+
+- name
+- description
+- address
+- city
+- phone
+- image
+- image_url
+- cuisine
+- rating
+- delivery_time
+- delivery_fee
+- is_open
+- is_active
+- created_at
+
+Example restaurant names:
+
+- BaluResto
+- BuntyResto
+- Spice Garden
+- BtechResto
+- 3Monkeys
+- DosteaResto
+- FrndResto
+
+---
+
+# 12. Category Model
+
+The Category model stores food categories.
+
+Important fields:
+
+- name
+- image
+- image_url
+- is_active
+
+Categories are used to organize food items.
+
+Examples:
+
+- Pizza
+- Biryani
+- Burgers
+- Desserts
+- Chinese
+- Indian Food
+
+---
+
+# 13. FoodItem Model
+
+The FoodItem model stores individual food products.
+
+Important fields:
+
+- restaurant
+- category
+- name
+- description
+- image
+- image_url
+- price
+- is_vegetarian
+- is_available
+- is_popular
+- created_at
+
+Each food item belongs to a restaurant and category.
+
+Example:
+
+Chicken Dum Biryani
+
+Price:
+
+₹299
+
+---
+
+# 14. Address Model
+
+The Address model stores customer delivery addresses.
+
+Important fields:
+
+- user
+- full_name
+- phone
+- address_line
+- city
+- state
+- pincode
+- is_default
+
+Each address belongs to a registered user.
+
+Users can:
+
+- Add an address
+- View saved addresses
+- Delete an address
+- Select an address during checkout
+
+---
+
+# 15. Cart Model
+
+The Cart model stores a user's shopping cart.
+
+Each user has one cart.
+
+The cart contains:
+
+- user
+- created_at
+- updated_at
+
+The cart calculates the total price of all cart items.
+
+---
+
+# 16. CartItem Model
+
+CartItem stores the individual food items inside a cart.
+
+Important information:
+
+- Cart
+- Food item
+- Quantity
+- Total price
+
+Users can:
+
+- Add food
+- Increase quantity
+- Decrease quantity
+- Remove food
+
+The total price is calculated using:
+
+Food price × Quantity
+
+---
+
+# 17. Order Model
+
+The Order model stores customer orders.
+
+An order contains information such as:
+
+- User
+- Delivery address
+- Order number
+- Subtotal
+- Total amount
+- Payment method
+- Order status
+- Order date
+
+Each order receives a unique order number.
+
+Example:
+
+`FDC44B7A047213`
+
+---
+
+# 18. Order Status
+
+The application supports multiple order statuses.
+
+### PLACED
+
+The customer has successfully placed the order.
+
+### CONFIRMED
+
+The restaurant has confirmed the order.
+
+### PREPARING
+
+The restaurant is preparing the food.
+
+### OUT_FOR_DELIVERY
+
+The food has been handed over for delivery.
+
+### DELIVERED
+
+The customer has received the order.
+
+### CANCELLED
+
+The order has been cancelled.
+
+---
+
+# 19. OrderItem Model
+
+OrderItem stores the food items belonging to an order.
+
+It contains:
+
+- Order
+- Food item
+- Quantity
+- Price
+
+Example:
+
+Chicken Dum Biryani
+
+Quantity: 3
+
+Price: ₹299
+
+Total:
+
+₹897
+
+---
+
+# 20. Wishlist
+
+The Wishlist feature allows users to save favorite food items.
+
+Users can:
+
+- Add food to favorites
+- Remove food from favorites
+- View wishlist items
+
+The wishlist is connected to the logged-in user.
+
+---
+
+# 21. Coupon
+
+The project also contains a Coupon model for supporting discount functionality.
+
+Coupons can be used for future improvements such as:
+
+- Percentage discounts
+- Fixed discounts
+- Minimum order amount
+- Coupon expiration
+- Active/inactive coupons
+
+---
+
+# 22. User Authentication
+
+The project uses Django's built-in authentication system.
+
+Users can:
+
+- Register
+- Login
+- Logout
+
+Django's built-in User model is used.
+
+User information includes:
+
+- Username
+- Email
+- Password
+
+Passwords are handled through Django's authentication system.
+
+---
+
+# 23. Registration System
+
+The registration page allows a new user to create an account.
+
+The user enters:
+
+- Username
+- Email
+- Password
+- Confirm password
+
+The application checks:
+
+- Username is provided
+- Password is provided
+- Passwords match
+- Username is not already registered
+- Email is not already registered
+
+After successful registration, the user is logged in automatically.
+
+---
+
+# 24. Login System
+
+The login page allows existing users to access their accounts.
+
+The system verifies:
+
+- Username
+- Password
+
+After successful login, the user is redirected to the home page.
+
+---
+
+# 25. Logout System
+
+Users can logout from the application.
+
+Django's logout functionality is used to end the authenticated session.
+
+---
+
+# 26. Home Page
+
+The home page is the main page of the Foodly application.
+
+It contains:
+
+- Navigation bar
+- Hero section
+- Search
+- Cuisine filter
+- Category filter
+- Price filter
+- Food categories
+- Restaurants
+- Popular food items
+- Food cards
+- Footer
+- Social media section
+- App promotion section
+- Newsletter section
+- Back-to-top button
+
+---
+
+# 27. Search Functionality
+
+Users can search for food.
+
+The search system can search by:
+
+- Food name
+- Restaurant name
+
+Example:
+
+Searching for:
+
+`Biryani`
+
+can display matching food items and restaurants.
+
+---
+
+# 28. Cuisine Filter
+
+Users can filter food based on cuisine.
+
+Example cuisines:
+
+- Biryani
+- Indian
+- Chinese
+- Fast Food
+
+The cuisine filter works with restaurant cuisine information.
+
+---
+
+# 29. Category Filter
+
+Users can filter food based on food category.
+
+The category filter uses the category name.
+
+For example:
+
+- Pizza
+- Biryani
+- Burger
+- Desserts
+
+---
+
+# 30. Price Filter
+
+Users can filter food based on price.
+
+Available price ranges include:
+
+### Under ₹200
+
+Food items below ₹200.
+
+### ₹200 - ₹500
+
+Food items between ₹200 and ₹500.
+
+### Above ₹500
+
+Food items above ₹500.
+
+---
+
+# 31. Restaurant Details
+
+Users can click a restaurant and view its details.
+
+The restaurant page displays:
+
+- Restaurant name
+- Restaurant image
+- Description
+- Cuisine
+- Location
+- Rating
+- Delivery time
+- Delivery fee
+- Open/closed status
+- Restaurant menu
+
+---
+
+# 32. Food Menu
+
+Each restaurant has food items.
+
+Food cards display information such as:
+
+- Food image
+- Food name
+- Description
+- Price
+- Vegetarian information
+- Availability
+- Add to Cart button
+- Wishlist button
+
+---
+
+# 33. Food Images
+
+Food images are stored inside Django's media directory.
+
+Example:
+
+`media/food/`
+
+The project contains downloaded food images for the available food items.
+
+The application supports:
+
+1. Local uploaded image
+2. Image URL
+3. Fallback image
+
+This helps prevent broken images on the website.
+
+---
+
+# 34. Media Configuration
+
+Django media files are configured using:
+
+MEDIA_URL:
+
+`/media/`
+
+MEDIA_ROOT:
+
+`BASE_DIR / "media"`
+
+The project URL configuration serves media files during development.
+
+---
+
+# 35. Shopping Cart
+
+The shopping cart is one of the main features.
+
+Users can:
+
+- Add food to cart
+- View cart
+- Increase quantity
+- Decrease quantity
+- Remove items
+- View subtotal
+- Continue shopping
+- Proceed to checkout
+
+---
+
+# 36. Cart Calculation
+
+The cart calculates food totals using:
+
+Food Price × Quantity
+
+Example:
+
+Food price = ₹299
+
+Quantity = 3
+
+Total = ₹897
+
+The cart total is calculated from all cart items.
+
+---
+
+# 37. Checkout
+
+The checkout page contains:
+
+- Cart items
+- Food quantities
+- Subtotal
+- Delivery fee
+- Discount
+- Total amount
+- Saved addresses
+- Add address option
+- Delete address option
+- Payment method selection
+- Place Order button
+
+---
+
+# 38. Delivery Address
+
+During checkout, users must select a delivery address.
+
+Users can add a new address by providing:
+
+- Full name
+- Phone number
+- Address
+- City
+- State
+- Pincode
+
+The address is stored in the database and can be used for future orders.
+
+---
+
+# 39. Payment Methods
+
+The checkout interface supports payment method selection.
+
+Available options:
+
+- Cash on Delivery
+- Card
+- UPI
+
+The current application stores the selected payment method with the order.
+
+A real payment gateway can be integrated in the future.
+
+Possible future payment integrations:
+
+- Razorpay
+- Stripe
+- PayPal
+
+---
+
+# 40. Order Placement
+
+When the user places an order:
+
+1. The selected address is checked.
+2. An order is created.
+3. Cart items are converted into order items.
+4. Food quantities are stored.
+5. Payment method is stored.
+6. The order status is set to `PLACED`.
+7. Cart items are removed.
+8. The user is redirected to the order success page.
+
+The order creation process uses Django database transactions.
+
+---
+
+# 41. Order Success Page
+
+After placing an order, the user sees an order success page.
+
+It displays:
+
+- Success message
+- Order number
+- Restaurant
+- Order status
+- Payment method
+- Order total
+- Bill information
+- Delivery information
+
+The page also provides buttons to:
+
+- View order
+- Track order
+- View all orders
+- Continue shopping
+
+---
+
+# 42. My Orders
+
+The My Orders page displays the user's previous orders.
+
+Users can view:
+
+- Order number
+- Order date
+- Restaurant
+- Order status
+- Order total
+- Order items
+
+Users can open an individual order to see more information.
+
+---
+
+# 43. Order Details
+
+The Order Details page contains complete information about an order.
+
+It displays:
+
+- Order number
+- Restaurant
+- Status
+- Food items
+- Quantity
+- Price
+- Delivery address
+- Phone number
+- Payment method
+- Bill details
+
+---
+
+# 44. Order Tracking
+
+Foodly contains an order tracking page.
+
+The tracking process contains:
+
+1. Order Placed
+2. Order Confirmed
+3. Preparing Your Food
+4. Out for Delivery
+5. Delivered
+
+The tracking timeline shows the current order status.
+
+---
+
+# 45. Wishlist
+
+The wishlist allows users to save food they like.
+
+Users can click the favorite/wishlist button on food items.
+
+The wishlist page displays saved foods.
+
+Users can remove items from the wishlist.
+
+---
+
+# 46. Messages
+
+Django messages are used to display notifications.
+
+Examples:
+
+- Account created successfully
+- Address added successfully
+- Address deleted successfully
+- Order placed successfully
+- Passwords do not match
+- Username already exists
+- Cart is empty
+- Address selection required
+
+---
+
+# 47. Security
+
+The project uses Django's built-in security features.
+
+Important security features include:
+
+- CSRF protection
+- Password hashing
+- Login authentication
+- Login-required pages
+- User-specific addresses
+- User-specific orders
+- User-specific cart
+- User-specific wishlist
+
+Users cannot access another user's private order or address by simply changing an ID in the URL because the views filter data using the logged-in user.
+
+---
+
+# 48. URL Structure
+
+Important URLs include:
+
+Home:
+
+`/`
+
+Restaurant:
+
+`/restaurants/<id>/`
+
+Cart:
+
+`/cart/`
+
+Add to cart:
+
+`/cart/add/<food_id>/`
+
+Increase cart item:
+
+`/cart/increase/<item_id>/`
+
+Decrease cart item:
+
+`/cart/decrease/<item_id>/`
+
+Remove cart item:
+
+`/cart/remove/<item_id>/`
+
+Checkout:
+
+`/checkout/`
+
+Add address:
+
+`/address/add/`
+
+Delete address:
+
+`/address/delete/<address_id>/`
+
+My Orders:
+
+`/orders/`
+
+Order Details:
+
+`/orders/<order_number>/`
+
+Track Order:
+
+`/orders/<order_number>/track/`
+
+Register:
+
+`/register/`
+
+Login:
+
+`/login/`
+
+Logout:
+
+`/logout/`
+
+Wishlist:
+
+`/wishlist/`
+
+Toggle Wishlist:
+
+`/wishlist/toggle/<food_id>/`
+
+---
+
+# 49. Admin Panel
+
+Django Admin can be used to manage application data.
+
+The admin panel can be used to manage:
+
+- Restaurants
+- Categories
+- Food Items
+- Orders
+- Order Items
+- Addresses
+- Coupons
+- Wishlist
+
+The admin panel is useful for adding and updating restaurant and food information.
+
+---
+
+# 50. Database Relationships
+
+Important relationships in the project include:
+
+User → Cart
+
+One user has one cart.
+
+User → Address
+
+One user can have multiple addresses.
+
+User → Order
+
+One user can have multiple orders.
+
+Restaurant → FoodItem
+
+One restaurant can have multiple food items.
+
+Category → FoodItem
+
+One category can contain multiple food items.
+
+Cart → CartItem
+
+One cart can contain multiple cart items.
+
+Order → OrderItem
+
+One order can contain multiple order items.
+
+FoodItem → Wishlist
+
+Food items can be saved by users in their wishlist.
+
+---
+
+# 51. Example Food Data
+
+The project contains food items from different categories and restaurants.
+
+Example foods:
+
+- Chicken Dum Biryani
+- Veg Biryani
+- Hyderabadi Chicken Biryani
+- Mutton Biryani
+- Egg Biryani
+- Paneer Biryani
+- Fry Piece Biryani
+- Chicken 65 Biryani
+- Paneer Butter Masala
+- Farmhouse Pizza
+- Veg Hakka Noodles
+
+---
+
+# 52. UI Design
+
+The application uses a modern food delivery style interface.
+
+Main design characteristics:
+
+- Orange primary color
+- Rounded cards
+- Food images
+- Responsive layout
+- Modern buttons
+- Navigation bar
+- Card-based design
+- Status badges
+- Order timeline
+- Mobile-friendly layout
+
+Primary theme color:
+
+`#ff4d2d`
+
+Background:
+
+`#f7f8fa`
+
+---
+
+# 53. Responsive Design
+
+The frontend is designed to work on:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+CSS media queries are used to adjust the layout for smaller screens.
+
+---
+
+# 54. Footer
+
+The Foodly website includes an extended footer section.
+
+It contains:
+
+- About Foodly
+- Rating section
+- Quick links
+- Support links
+- Social media links
+- App promotion
+- Newsletter section
+- Copyright information
+- Back-to-top button
+
+---
+
+# 55. Project Workflow
+
+The complete customer workflow is:
+
+Register
+
+↓
+
+Login
+
+↓
+
+Home Page
+
+↓
+
+Search / Filter Food
+
+↓
+
+Select Restaurant
+
+↓
+
+View Menu
+
+↓
+
+Add Food to Cart
+
+↓
+
+Open Cart
+
+↓
+
+Modify Quantity
+
+↓
+
+Checkout
+
+↓
+
+Select Delivery Address
+
+↓
+
+Select Payment Method
+
+↓
+
+Place Order
+
+↓
+
+Order Success
+
+↓
+
+View Order Details
+
+↓
+
+Track Order
+
+↓
+
+Order Delivered
+
+---
+
+# 56. Cart Workflow
+
+Food selection:
+
+User selects food.
+
+↓
+
+Food is added to cart.
+
+↓
+
+CartItem is created.
+
+↓
+
+User changes quantity.
+
+↓
+
+Cart total is recalculated.
+
+↓
+
+User proceeds to checkout.
+
+---
+
+# 57. Order Workflow
+
+Checkout:
+
+User selects address.
+
+↓
+
+User selects payment method.
+
+↓
+
+Order is created.
+
+↓
+
+Order items are created.
+
+↓
+
+Cart items are deleted.
+
+↓
+
+Order status becomes `PLACED`.
+
+↓
+
+User sees order success page.
+
+↓
+
+User can track the order.
+
+---
+
+# 58. Error Handling
+
+The application validates important user actions.
+
+Examples:
+
+### Registration
+
+Checks whether:
+
+- Username exists
+- Password is provided
+- Passwords match
+
+### Address
+
+Checks whether:
+
+- Name exists
+- Phone exists
+- Address exists
+- City exists
+- State exists
+- Pincode exists
+
+### Checkout
+
+Checks whether:
+
+- Cart contains items
+- Address is selected
+
+---
+
+# 59. Database Transaction
+
+Order creation uses a database transaction.
+
+The transaction ensures that order creation and order-item creation happen together.
+
+If an error occurs during the transaction, the database can roll back the changes.
+
+This helps maintain data consistency.
+
+---
+
+# 60. Development Commands
+
+To create a virtual environment:
+
+```bash
+python -m venv venv
